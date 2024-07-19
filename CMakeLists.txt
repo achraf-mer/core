@@ -224,6 +224,7 @@ if(NOT TRITON_CORE_HEADERS_ONLY)
   # /etc/os-release does not exist on Windows
   if(EXISTS "/etc/os-release")
     file(STRINGS /etc/os-release DISTRO REGEX "^NAME=")
+    file(STRINGS /etc/os-release DISTRO_LIKE REGEX "^ID_LIKE=")
     string(REGEX REPLACE "NAME=\"(.*)\"" "\\1" DISTRO "${DISTRO}")
     string(REGEX REPLACE "ID_LIKE=\"(.*)\"" "\\1" DISTRO_LIKE "${DISTRO_LIKE}")
     message(STATUS "Distro Name: ${DISTRO}")
