@@ -2084,7 +2084,7 @@ ModelConfigToJson(
   std::string config_json_str;
   ::google::protobuf::util::JsonPrintOptions options;
   options.preserve_proto_field_names = true;
-  options.always_print_primitive_fields = true;
+  options.always_print_fields_with_no_presence = true;
   ::google::protobuf::util::MessageToJsonString(
       config, &config_json_str, options);
 
