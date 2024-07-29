@@ -2085,8 +2085,14 @@ ModelConfigToJson(
   ::google::protobuf::util::JsonPrintOptions options;
   options.preserve_proto_field_names = true;
   options.always_print_fields_with_no_presence = true;
-  ::google::protobuf::util::MessageToJsonString(
+
+  // Capture and check the status of the MessageToJsonString call
+  absl::Status absl_status = ::google::protobuf::util::MessageToJsonString(
       config, &config_json_str, options);
+
+  if (!absl_status.ok()) {
+    return Status(Status::Code::INTERNAL, std::string(absl_status.message()));
+  }
 
   // We need to verify that every field 64-bit field in the
   // ModelConfig protobuf is being handled. We hardcode the known
