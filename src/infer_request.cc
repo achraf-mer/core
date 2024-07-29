@@ -780,7 +780,9 @@ InferenceRequest::AddOverrideInput(
   std::shared_ptr<Input> i = std::make_shared<Input>(name, datatype, shape);
   *(i->MutableShape()) = i->OriginalShape();
   if (batch_size > 0) {
-    *(i->MutableShapeWithBatchDim()) = {batch_size};
+    // Clear the vector before assigning to avoid any potential issues
+    i->MutableShapeWithBatchDim()->clear();
+    i->MutableShapeWithBatchDim()->push_back(batch_size);
     i->MutableShapeWithBatchDim()->insert(
         i->MutableShapeWithBatchDim()->end(), i->OriginalShape().begin(),
         i->OriginalShape().end());
